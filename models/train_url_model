@@ -1,0 +1,35 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report
+import joblib
+
+
+
+df = pd.read_csv("data/phishing_site_urls")
+X = df [['length', 'num_dots', 'num_hyphens', 'contains_ip']]
+Y = df ['label'] 
+
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size= 0.2, random_state=42)
+
+def sigmoid(z):
+    return 1/1 + np.exp(-z)
+
+class CustomLogisticRegression:
+    def __init__(self, learning_rate=0.5, iterations = 1000, verbose=False):
+        self.learning_rate = learning_rate
+        self.iterations = iterations
+        self.verbose = verbose
+        self.weights = None
+
+
+def Fit(self, X,Y):
+    n_samples, n_features = X.shape
+    X_bias = np.hstack((np.ones((n_samples, 1)), X))
+
+    self.weights = np.zeros(X_bias.shape[1])
+
+    for i in range(self.iterations):
+        z = np.dot(X_bias, self.weights)
+        y_hat = sigmoid(z)
